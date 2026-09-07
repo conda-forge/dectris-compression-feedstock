@@ -15,7 +15,7 @@ source:
     - unvendor-lz4.patch
 
 build:
-  number: 2
+  number: 3
   script:
     - if: unix
       then: rm -rf third_party/lz4
