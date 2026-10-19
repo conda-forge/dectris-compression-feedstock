@@ -22,3 +22,5 @@ python:
 - 3.14.* *_cp314
 target_platform:
 - linux-64
+zstd:
+- '1.5'
