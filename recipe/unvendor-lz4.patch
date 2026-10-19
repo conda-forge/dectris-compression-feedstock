@@ -1,42 +1,36 @@
 diff --git a/MANIFEST.in b/MANIFEST.in
-index 6516add..e67d24c 100644
+index 5f05cc3..99ff9e9 100644
 --- a/MANIFEST.in
 +++ b/MANIFEST.in
-@@ -4,5 +4,3 @@ include src/compression.h
+@@ -5,8 +5,6 @@ include src/trpx.h
  include third_party/bitshuffle/LICENSE-APACHE
  include third_party/bitshuffle/LICENSE-MIT
  include third_party/bitshuffle/src/bitshuffle.h
 -include third_party/lz4/LICENSE
 -include third_party/lz4/lib/lz4.h
+ include third_party/patches/apply_patches.py
+ include third_party/patches/trpx/*.patch
+ include third_party/trpx/include/*.hpp
 diff --git a/setup.py b/setup.py
-index c7f2a87..7f67a45 100644
+index 0742da5..41509d6 100644
 --- a/setup.py
 +++ b/setup.py
-@@ -31,13 +31,12 @@ setup(
-                 "python/dectris/compression.c",
+@@ -70,7 +70,6 @@ setup(
                  "src/compression.c",
+                 "src/trpx.cc",
                  "third_party/bitshuffle/src/bitshuffle.c",
 -                "third_party/lz4/lib/lz4.c",
-             ],
+             ]
+             # zstd: no dictionary builder.
+             + sorted(glob("third_party/zstd/lib/common/*.c"))
+@@ -79,9 +78,9 @@ setup(
              include_dirs=[
                  ".",
-                 "third_party",
+                 "third_party/bitshuffle/src",
 -                "third_party/lz4/lib",
+                 "third_party/zstd/lib",
              ],
 +            libraries=["lz4"],
-         )
-     ],
-     cmdclass={"build_ext": BuildExt},
-diff --git a/src/compression.c b/src/compression.c
-index 2b87330..cdb72ab 100644
---- a/src/compression.c
-+++ b/src/compression.c
-@@ -18,7 +18,7 @@
- #include <string.h>
- 
- #include "bitshuffle/src/bitshuffle.h"
--#include "lz4/lib/lz4.h"
-+#include "lz4.h"
- #include "src/compression.h"
- 
- #if defined(__clang__)
+             define_macros=[
+                 # No legacy formats and no x86-64 assembly (portable C fallback).
+                 ("ZSTD_DISABLE_ASM", "1"),
