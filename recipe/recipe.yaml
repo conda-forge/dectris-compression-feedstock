@@ -13,6 +13,7 @@ source:
   sha256: 7d0a6576a6611be4a2da7ad7911f9c3b34105c29c397a6975cc2622eca9de80f
   patches:
     - unvendor-lz4.patch
+    - unvendor-zstd.patch
 
 build:
   number: 0
@@ -36,6 +37,7 @@ requirements:
     - wheel
     - pip
     - lz4-c
+    - zstd
   run:
     - python
 

@@ -1,0 +1,39 @@
+diff --git a/MANIFEST.in b/MANIFEST.in
+index 99ff9e9..e392058 100644
+--- a/MANIFEST.in
++++ b/MANIFEST.in
+@@ -8,10 +8,3 @@ include third_party/bitshuffle/src/bitshuffle.h
+ include third_party/patches/apply_patches.py
+ include third_party/patches/trpx/*.patch
+ include third_party/trpx/include/*.hpp
+-include third_party/zstd/LICENSE
+-include third_party/zstd/COPYING
+-include third_party/zstd/lib/zstd.h
+-include third_party/zstd/lib/zstd_errors.h
+-include third_party/zstd/lib/common/*.h
+-include third_party/zstd/lib/compress/*.h
+-include third_party/zstd/lib/decompress/*.h
+diff --git a/setup.py b/setup.py
+index 41509d6..8d6c5a1 100644
+--- a/setup.py
++++ b/setup.py
+@@ -70,17 +70,12 @@ setup(
+                 "src/compression.c",
+                 "src/trpx.cc",
+                 "third_party/bitshuffle/src/bitshuffle.c",
+-            ]
+-            # zstd: no dictionary builder.
+-            + sorted(glob("third_party/zstd/lib/common/*.c"))
+-            + sorted(glob("third_party/zstd/lib/compress/*.c"))
+-            + sorted(glob("third_party/zstd/lib/decompress/*.c")),
++            ],
+             include_dirs=[
+                 ".",
+                 "third_party/bitshuffle/src",
+-                "third_party/zstd/lib",
+             ],
+-            libraries=["lz4"],
++            libraries=["lz4", "zstd"],
+             define_macros=[
+                 # No legacy formats and no x86-64 assembly (portable C fallback).
+                 ("ZSTD_DISABLE_ASM", "1"),
