@@ -26,6 +26,7 @@ build:
 requirements:
   build:
     - ${{ compiler('c') }}
+    - ${{ compiler('cxx') }}
     - ${{ stdlib('c') }}
     - if: build_platform != target_platform
       then:
